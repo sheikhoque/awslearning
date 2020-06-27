@@ -1,4 +1,4 @@
-##Capacity Planning Multiple Index Cluster 
+## Capacity Planning Multiple Index Cluster 
 
 **Formulas**
 ```
@@ -37,7 +37,7 @@
         ***Note that for both index, daily source data is same as we are considering each request as independent session for worst case
 ```
 
-##Capacity Planning without ultrawarm Multiple index
+## Capacity Planning without ultrawarm Multiple index
 
 **Index 1**
 ```

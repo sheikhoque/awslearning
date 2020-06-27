@@ -1,4 +1,4 @@
-##Capacity Planning Single Index Cluster
+## Capacity Planning Single Index Cluster
 
 **Formulas**
 ```
@@ -89,4 +89,4 @@
         
 ```
 
-##Cost Comparison based on XIII & XIV, UltraWarm is almost 60% cheaper for this use case particular
+## Cost Comparison based on XIII & XIV, UltraWarm is almost 60% cheaper for this use case particular
