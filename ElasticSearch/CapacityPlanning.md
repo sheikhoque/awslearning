@@ -1,4 +1,4 @@
-#Capacity Planning of ES Cluster
+##Capacity Planning of ES Cluster
 while sizing the ES cluster, we need to consider two factors - a) minimum storage requirement b) computation power required based on data ingestion throughput. Each rule will come up with its own node requirement and we need to take the max of the two.
 
 **Key Points to remember**

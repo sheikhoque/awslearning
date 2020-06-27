@@ -1,4 +1,4 @@
-## Capacity Planning Single Index Cluster
+##Capacity Planning Single Index Cluster
 
 **Formulas**
 ```
@@ -9,7 +9,7 @@
        ACTIVE SHARDS           = Primary Shard Count * (1+Replica)                                      .... (V)
 ```
 
-##Use Case
+**Use Case**
 > Consider a use case, where we have heartbeat getting ingested every 20 second to elastic search. Lets say,
 > we have 400K concurrent user sending heartbeats, where each heartbeat is of size 1200  bytes. We are 
 >ingesting some quality metrics to ElasticSearch and using a index **sessions**. We want to
@@ -89,4 +89,4 @@
         
 ```
 
-## Cost Comparison based on XIII & XIV, UltraWarm is almost 60% cheaper for this use case particular
+##Cost Comparison based on XIII & XIV, UltraWarm is almost 60% cheaper for this use case particular

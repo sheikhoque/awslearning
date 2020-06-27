@@ -1,4 +1,4 @@
-## Capacity Planning Multiple Index Cluster 
+##Capacity Planning Multiple Index Cluster 
 
 **Formulas**
 ```
@@ -10,7 +10,7 @@
        Number of active shards should be divisble by number of instances                                .....(V*)
 ```
 
-##Use Case
+**Use Case**
 > Consider a use case, where we have heartbeat getting ingested every 20 second to elastic search. Lets say,
 > we have 400K concurrent user sending heartbeats, where each heartbeat is of size 1200  bytes. We are 
 >ingesting some quality metrics to ElasticSearch in two indices - 1) short_interval*, 2)long_interval*. We want to
