@@ -46,10 +46,10 @@
         Active Shards           = Primary Shard Count * (1+ Replica) [**(V)**] = 52 ( 1+1) = 104
         Min. Storage Required   = Daily Source Data * (1 + Replica) * Retention Period [**(I)**] = 2073.6*(1+1)*30 = 124416 GB 
         [Considering r5.4xlarge]
-        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**) = Math.CEILING(124416/6000) = 21 ..(IX)
+        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**)/3 (each document of an interval is updated atmost thrice) = Math.CEILING(124416/6000/3) = 7 ..(IX)
         No. Instances based on CPU Required = Math.CEILING(Active Shards * Shard vs CPU [**(IV)**]/VCPU Per Instance [**(VII)**)) = 10   ..(X)
 
-        Considering (IX) && (X), we should have 21 instances of R5.4xlarge instances. 
+        Considering (IX) && (X), we should have 10 instances of R5.4xlarge instances. 
 
         as per (V*) number of active shards should be divisible by number of instances to make sure no data skewness.
         So, active shards/No. Instances based on Storage = 104/21 = Not Divisible, 
@@ -71,22 +71,22 @@
         Active Shards           = Primary Shard Count * (1+ Replica) [**(V)**] = 52 ( 1+1) = 104
         Min. Storage Required   = Daily Source Data * (1 + Replica) * Retention Period [**(I)**] = 2073.6*(1+1)*365 = 1513728 GB 
         [Considering r5.4xlarge]
-        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**) = Math.CEILING(1513728/6000) = 253 ..(IX)
+        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**)/3(each document  is updated thrice) = Math.CEILING(1513728/6000/3) = 85 ..(IX)
         No. Instances based on CPU Required = Math.CEILING(Active Shards * Shard vs CPU [**(IV)**]/VCPU Per Instance [**(VII)**)) = 10   ..(X)
 
-        Considering (IX) && (X), we should have 253 instances of R5.4xlarge instances. 
+        Considering (IX) && (X), we should have 85 instances of R5.4xlarge instances. 
 
 
-        As recommended to use 3 availability zone, each zone will have 253/3 = 84 instances per zone [85 in one zone]
+        As recommended to use 3 availability zone, each zone will have 85/3 = 29 instances per zone [85 in one zone]
 
         **Cost Calculation...Monthly**
-        Cost for R5.4xlarge instances = 253*HourlyRate*24*30 = 253*1.487*24*30 = **270872** ....(XI)
+        Cost for R5.4xlarge instances = 85*HourlyRate*24*30 = 85*1.487*24*30 = **91004** ....(XI)
         
         
 ```
 
 
-**Total Monthly Cost without UltraWarm for both index  = 296567.28**
+**Total Monthly Cost without UltraWarm for both index  = 116699**
 
 ##Capacity Planning with ultrawarm Multiple index
 
@@ -98,11 +98,11 @@
         Active Shards           = Primary Shard Count * (1+ Replica) [**(V)**] = 52 ( 1+1) = 104
         Min. Storage Required   = Daily Source Data * (1 + Replica) * Hot Retention Period [**(I)**] = 2073.6*(1+1)*7 = 29030.4 GB 
         **[Considering r5.4xlarge]**
-        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**) = Math.CEILING(29030.4/6000) = 5 ..(XII)
+        No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**)/3 = Math.CEILING(29030.4/6000/3) = 2 ..(XII)
         No. Instances based on CPU Required = Math.CEILING(Active Shards * Shard vs CPU [**(IV)**]/VCPU Per Instance [**(VII)**)) = 10   ..(XIII)
         **[Considering UltraWarm large]**
         Storage Requirement     = Daily Source Data * Warm Retention Period = 2073.6*23 = 47693 GB
-        UltraWarm Instances Req.= Math.Ceiling(Storage Requirement/ UltraWarm Volume Per Instance) = Math.Ceiling(47693/20000) = 3
+        UltraWarm Instances Req.= Math.Ceiling(Storage Requirement/ UltraWarm Volume Per Instance) = Math.Ceiling(47693/20000/3) = 1
 
         Considering (IX) && (X), we should have 10 instances of R5.4xlarge instances. 
         Now, number of active shards should be divisible by number of instances to make sure no data skew.
@@ -113,8 +113,8 @@
 
         **Cost Calculation...Monthly**
         Cost for R5.4xlarge instances = 10*HourlyRate*24*30 = 10*1.487*24*30 = **10706.4**
-        Cost for UltraWarm large instances = 3 * HourlyRate * 24  * 30 = 3* 2.68 * 24 *30 = **5788.8**
-        Total Monthly Cost Using UltraWarm = 16495.2 ... (XIV)
+        Cost for UltraWarm large instances = 1 * HourlyRate * 24  * 30 = 3* 2.68 * 24 *30 = **2000**
+        Total Monthly Cost Using UltraWarm = 12706.2 ... (XIV)
        
         
 ```
@@ -128,10 +128,10 @@
         Min. Storage Required   = Daily Source Data * (1 + Replica) * Hot Retention Period [**(I)**] = 2073.6*(1+1)*7 = 29030.4 GB 
         **[Considering r5.4xlarge]**
         No. Instances based on Storage      = Math.CEILING(Min. Storage Required / EBS Volume **[VI]**) = Math.CEILING(29030.4/6000) = 5 ..(XII)
-        No. Instances based on CPU Required = Math.CEILING(Active Shards * Shard vs CPU [**(IV)**]/VCPU Per Instance [**(VII)**)) = 10   ..(XIII)
+        No. Instances based on CPU Required = Math.CEILING(Active Shards * Shard vs CPU [**(IV)**]/VCPU Per Instance [**(VII)**))/3 = 4   ..(XIII)
         **[Considering UltraWarm large]**
         Storage Requirement     = Daily Source Data * Warm Retention Period = 2073.6*358 = 742348 GB
-        UltraWarm Instances Req.= Math.Ceiling(Storage Requirement/ UltraWarm Volume Per Instance) = Math.Ceiling(742348/20000) = 38
+        UltraWarm Instances Req.= Math.Ceiling(Storage Requirement/ UltraWarm Volume Per Instance) = Math.Ceiling(742348/20000)/3 = 13
 
         Considering (IX) && (X), we should have 10 instances of R5.4xlarge instances. 
         Now, number of active shards should be divisible by number of instances to make sure no data skew.
@@ -142,14 +142,14 @@
 
         **Cost Calculation...Monthly**
         Cost for R5.4xlarge instances = 10*HourlyRate*24*30 = 10*1.487*24*30 = **10706.4**
-        Cost for UltraWarm large instances = 38 * HourlyRate * 24  * 30 = 38* 2.68 * 24 *30 = **73324.8**
-        Total Monthly Cost Using UltraWarm = 84030... (XIV)
+        Cost for UltraWarm large instances = 13 * HourlyRate * 24  * 30 = 13* 2.68 * 24 *30 = **24442**
+        Total Monthly Cost Using UltraWarm = 35147... (XIV)
        
         
 ```
 
-**Total Monthly Cost without UltraWarm for both index  = 296567.28**
-**Total Monthly Cost with UltraWarm for both index  = 84030**
+**Total Monthly Cost without UltraWarm for both index  = 116699**
+**Total Monthly Cost with UltraWarm for both index  = 47853**
 
-**Using UltraWarm, we can save 72% monthly**
+**Using UltraWarm, we can save 41% monthly**
 
