@@ -18,8 +18,8 @@
 
 **Storage Requirement**
 ```
-        Document Arrival       = 20s
-        Document Size          = 1200 bytes
+        Document Arrival        = 20s
+        Document Size           = 1200 bytes
         Concurrent Users        = 400000
         Concurrent Request/Sec  = Concurrent Users/Heartbeat Arrival = 400000/20 = 20000
         Daily Total Request     = Concurrent Request/Sec *60*60*24 = 20000*60*60*24 = 1728*10^6
