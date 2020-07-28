@@ -21,7 +21,7 @@
         Document Arrival        = 20s
         Document Size           = 1200 bytes
         Concurrent Users        = 400000
-        Concurrent Request/Sec  = Concurrent Users/Heartbeat Arrival = 400000/20 = 20000
+        Concurrent Request/Sec  = Concurrent Users/Document Arrival = 400000/20 = 20000
         Daily Total Request     = Concurrent Request/Sec *60*60*24 = 20000*60*60*24 = 1728*10^6
         Daily Source Data       = Document Size * Daily Total Request = 1200 * 1728 * 10^6 / 10^9 GB = 2073.6 GB
         Replica                 = 1    
